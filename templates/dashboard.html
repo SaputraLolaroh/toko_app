@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Dashboard — Halo, {{ username }}! 👋</h2>
+
+<!-- Kartu statistik -->
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="card text-bg-primary shadow-sm">
+            <div class="card-body">
+                <h6 class="card-title">Total Produk</h6>
+                <h3>{{ stats.total_produk }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card text-bg-success shadow-sm">
+            <div class="card-body">
+                <h6 class="card-title">Nilai Inventaris</h6>
+                <h3>Rp {{ "{:,}".format(stats.total_nilai) }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card text-bg-warning shadow-sm">
+            <div class="card-body">
+                <h6 class="card-title">Stok Menipis (&lt;5)</h6>
+                <h3>{{ stats.stok_menipis }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card text-bg-secondary shadow-sm">
+            <div class="card-body">
+                <h6 class="card-title">Kategori</h6>
+                <h3>{{ stats.kategori }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Peringatan stok menipis (hanya tampil kalau ada) -->
+{% if low_stock %}
+<div class="card border-warning shadow-sm mb-4">
+    <div class="card-header bg-warning-subtle">⚠️ Perlu Restock</div>
+    <ul class="list-group list-group-flush">
+        {% for p in low_stock %}
+        <li class="list-group-item d-flex justify-content-between">
+            <span>{{ p.name }}</span>
+            <span class="badge bg-warning text-dark">sisa {{ p.stock }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<a href="{{ url_for('main.product_add') }}" class="btn btn-primary">+ Tambah Produk</a>
+<a href="{{ url_for('main.product_list') }}" class="btn btn-outline-dark">Lihat Semua Produk</a>
+{% endblock %}

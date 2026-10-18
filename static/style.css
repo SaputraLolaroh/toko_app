@@ -1,0 +1,9 @@
+/* Sedikit sentuhan tambahan di atas Bootstrap */
+.card {
+    border: none;
+    border-radius: 12px;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Tambah' if mode == 'add' else 'Ubah' }} Produk{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h3 class="mb-3">
+                    {{ 'Tambah Produk Baru' if mode == 'add' else 'Ubah Produk: ' ~ product.name }}
+                </h3>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Nama Produk</label>
+                        <input type="text" name="name" class="form-control" required
+                               value="{{ product.name if product else '' }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Kategori</label>
+                        <input type="text" name="category" class="form-control"
+                               placeholder="contoh: Makanan, Elektronik"
+                               value="{{ product.category if product else '' }}">
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label class="form-label">Harga (Rp)</label>
+                            <input type="number" name="price" class="form-control" min="0" required
+                                   value="{{ product.price if product else '' }}">
+                        </div>
+                        <div class="col mb-3">
+                            <label class="form-label">Stok</label>
+                            <input type="number" name="stock" class="form-control" min="0" required
+                                   value="{{ product.stock if product else '' }}">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">
+                        {{ 'Simpan Produk' if mode == 'add' else 'Simpan Perubahan' }}
+                    </button>
+                    <a href="{{ url_for('main.product_list') }}" class="btn btn-outline-secondary">Batal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
